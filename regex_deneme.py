@@ -3,7 +3,8 @@ import re
 pattern = "^([abc]{1,3})*$"# pragma: allowlist secret
 string = "abcabcabcbaaaccccccccccccc"
 password = "mySuperSecretPswd"
-
+private_key = "mySecretKey"
+aws_secret =  "aldsfjLAKJDFLKAJF234E2LWKJLASDJA22342agadfaADSFF"
 if re.match(pattern, string):
     print(" The string '{}' matches the pattern.".format(password))
 else:
