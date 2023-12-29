@@ -4,18 +4,18 @@
  */
 
 /* jslint node: true */
-import config = require('config')
+import config from 'config'
 import {
-  InferAttributes,
-  InferCreationAttributes,
+  type InferAttributes,
+  type InferCreationAttributes,
   Model,
   DataTypes,
-  CreationOptional,
-  Sequelize
+  type CreationOptional,
+  type Sequelize
 } from 'sequelize'
 import challengeUtils = require('../lib/challengeUtils')
+import * as utils from '../lib/utils'
 const security = require('../lib/insecurity')
-const utils = require('../lib/utils')
 const challenges = require('../data/datacache').challenges
 
 class User extends Model<
@@ -126,13 +126,13 @@ const UserModelInit = (sequelize: Sequelize) => { // vuln-code-snippet start wea
     }
   )
 
-  User.addHook('afterValidate', (user: User) => {
+  User.addHook('afterValidate', async (user: User) => {
     if (
       user.email &&
     user.email.toLowerCase() ===
       `acc0unt4nt@${config.get('application.domain')}`.toLowerCase()
     ) {
-      return Promise.reject(
+      await Promise.reject(
         new Error(
           'Nice try, but this is not how the "Ephemeral Accountant" challenge works!'
         )
